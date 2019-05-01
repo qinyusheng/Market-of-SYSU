@@ -50,8 +50,30 @@
 
 ## 与php连接
 
-1. 连接代码：
-~~~
+1. 连接代码
 
-~~~
-2. 打
+    ~~~<php>
+    function __construct() {
+                $server="localhost";//主机
+                $db_username="root";//数据库用户名
+                $db_password="qin";//数据库密码
+                $db_name='test';//数据库的名字
+                $this->conn = mysqli_connect($server,$db_username,$db_password);//链接数据库
+                if(!$this->conn){
+                die("we can't connect bro".mysqli_error($this->conn));//如果链接失败输出错误 die()退出脚本
+                }
+                mysqli_select_db($this->conn , $db_name);//选择数据库(数据库名)
+
+                //不知道在干什么，似乎是让数据库能识别中文编码
+                mysqli_query($this->conn , "SET NAMES utf-8");
+            }
+    ~~~
+
+2. 把上方代码中的这些参数改成你的服务器上对应的参数，即可连接到数据库
+
+    ~~~<php>
+        $server="localhost";//主机
+        $db_username="root";//数据库用户名
+        $db_password="qin";//数据库密码
+        $db_name='test';//数据库的名字
+    ~~~
