@@ -27,23 +27,31 @@
     * 标记2：你当前所在位置
 2. 点击上方sql进入控制台界面![ku_sql](image/mysql_db_sqk.png)
 3. 将以下代码复制粘贴到控制台上
+    ~~~
+    create table Users(
+            user_id int auto_increment primary key,
+            user_name varchar(50) not null,
+            user_password varchar(50) not null,
+            user_email varchar(50) not null,
+            user_sex bit,
+            user_real_name varchar(50),
+            user_department varchar(50),
+            user_major varchar(50),
+            user_grade bit,
+            user_contact varchar(50),
+            user_style bit default 0,
+            user_text tinytext,
+            user_time date,
+            user_record timestamp
+    )
+    ~~~
+
+4. 点击执行，即可成功创建一个表
+
+## 与php连接
+
+1. 连接代码：
 ~~~
-create table Users(
-        user_id int auto_increment primary key not null,
-        user_name varchar(50) not null,
-        user_password varchar(50) not null,
-        user_email varchar(50) not null,
-        user_sex bit,
-        user_real_name varchar(50),
-        user_department varchar(50),
-        user_major varchar(50),
-        user_grade bit,
-        user_contact varchar(50),
-        user_style bit default 0,
-        user_text tinytext,
-        user_time date,
-        user_record timestamp
-)
 
 ~~~
-4. 点击执行，即可成功创建一个表
+2. 打
