@@ -7,7 +7,13 @@
 1. type_id：类型编号
 2. type_name：类型名称
 3. good_id：商品编号
+4. $conn：连接变量，与数据库的接口
 
+### 成员函数
+
+1. 构造函数(**function __construct()**):
+   * 与数据库进行连接 $**conn**
+2. get/set函数：提供对变量的接口
 
 ## Goods 类
 
@@ -26,12 +32,14 @@
 11. click_times：点击次数
 12. good_owner：卖家用户名
 13. good_contact：卖家联系方式
+14. $conn：连接变量，与数据库的接口
 
 ### 成员函数
 
 1. 构造函数(**function __construct()**)：
    * 与数据库进行链接  
    * 与服务器端保存图片的文件夹进行链接
+2. get与set函数(**get/set_variable_name(/s)**)：提供对变量的接口
 
 ---
 
