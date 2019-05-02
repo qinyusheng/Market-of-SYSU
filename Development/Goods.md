@@ -39,7 +39,9 @@
 1. 构造函数(**function __construct()**)：
    * 与数据库进行链接  
    * 与服务器端保存图片的文件夹进行链接
-2. get与set函数(**get/set_variable_name(/s)**)：提供对变量的接口
+2. 析构函数，关闭数据库
+3. get与set函数(**get/set_variable_name(/s)**)：提供对变量的接口
+4. 查询函数(**find_good_by_id()**)：获取商品信息，如果商品不存在，发挥False
 
 ---
 
