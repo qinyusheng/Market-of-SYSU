@@ -124,3 +124,24 @@
 找到展示框的位置坐标
 
 1. 根据需要打印的展示框数量，计算出坐标参数
+
+# 数据库创建
+
+~~~ Goods库
+CREATE TABLE Goods (
+   good_id INT PRIMARY KEY AUTO_INCREMENT,
+   type_id INT,
+   good_name VARCHAR(50) not null,
+   good_describe text,
+   good_address varchar(50),
+   good_image VARCHAR(50),
+   good_price INT NOT NULL,
+   start_time DATE,
+   end_time DATE,
+   old_new VARCHAR(50),
+   good_state INT,
+   click_time INT DEFAULT 0,
+   good_owner VARCHAR(50),
+   good_contact VARCHAR(50)
+)character set = utf8;
+~~~
