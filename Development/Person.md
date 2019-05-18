@@ -26,4 +26,12 @@
    * 所处校区
    * 联系方式
 
-2. 
+### Person 类
+
+1. 成员变量：
+   * user_id
+   * user_name
+   * person_grape
+   * person_major
+   * person_address
+   * person_contact
