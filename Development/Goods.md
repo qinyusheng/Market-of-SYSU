@@ -1,6 +1,6 @@
 # 商品发布功能详解
 
-## Types 类
+<!-- ## Types 类
 
 ### 成员变量
 
@@ -13,7 +13,7 @@
 
 1. 构造函数(**function __construct()**):
    * 与数据库进行连接 $**conn**
-2. get/set函数：提供对变量的接口
+2. get/set函数：提供对变量的接口 -->
 
 ## Goods 类
 
@@ -136,7 +136,7 @@ CREATE TABLE Goods (
    good_address varchar(50),
    good_image VARCHAR(50),
    good_price INT NOT NULL,
-   start_time DATE,
+   start_time ,
    end_time DATE,
    old_new VARCHAR(50),
    good_state INT,
