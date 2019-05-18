@@ -1,57 +1,4 @@
-<?php
-    // 登陆脚本
-    include('Class_Users.php');
-    $user = new Users();
-
-   /*  重点：$_session变量是一类全局变量，可以与后端进行对话（php里保存的变量可以用在html里），
-        而且，$_session变量会跟随用户的网页一起移动，到了另一个页面里，仍旧可以使用这些变量
-        有了$_session以后，我们就能实现更多与前端的连接
-         */
-    // 如果尚未定义Passed的session对象，就定义一个，值为false表示还未通过身份验证
-    if(!isset($_SESSION['Passed'])){
-        $_SESSION['Passed'] = false;
-    }
-
-    if($_SESSION['Passed'] == false){
-        //检查用户是否已经输入过数据
-        if(!isset($_POST['username']) || $_POST['username'] == ""){
-            $errmsg = "请输入用户名和密码";
-        }
-        else{
-            // 读取从表单获取的数据
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-
-            //开始验证是输入的 username 是否为用户名
-            if($user->is_user_name($username)){
-                if($user->is_user_password($password)){
-                    $_SESSION['Passed'] = true;
-                    $_SESSION['user_id'] = $user->user_id;
-                }else{
-                    $errmsg = "密码不正确";
-                }
-            }// 验证user是否为邮箱
-            elseif($user->is_user_email($username)){
-                if($user->is_user_password($password)){
-                    $_SESSION['Passed'] = true;
-                    $_SESSION['user_id'] = $user->user_id;
-                }else{
-                    $errmsg = "密码不正确";
-                }
-            }else{
-                $errmsg = "请输入正确的用户名或邮箱";
-            }
-        }
-    }
-    if($_SESSION['Passed'])
-        echo("success!");
-
-    
-    // 如果登陆不成功，则重新打印出登陆表单
-    if($_SESSION['Passed'] == false){
-?>
-
-<!doctype html>
+﻿<!doctype html>
 <style>
     html, body {
         height: 100%;
@@ -298,11 +245,10 @@
 
 
 <body>
-    <form id="login" opacity: 0.5 method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
+    <form id="login" opacity: 0.5 method="POST" action="land_and_register.php">
         <h1>Log In</h1>
-        <p><?php echo($errmsg);?></p>
         <fieldset id="inputs">
-          <input id="username" type="text" placeholder="Username or Email_address" name="username" autofocus required/>
+          <input id="username" type="text" placeholder="Username" name="username" autofocus required/>
           <input id="password" type="password" placeholder="Password" name="password" required/>
         </fieldset>
         <fieldset id="actions">
@@ -317,14 +263,3 @@
 
 </html>
 
-
-
-<?php
-        exit("");
-    }
-    else{
-        header('content-type:text/html;charset=utf-8');
-        $url='index.php';
-        echo "<script>window.location.href='$url';</script>;";
-    } 
-?>

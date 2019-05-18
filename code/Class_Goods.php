@@ -1,23 +1,25 @@
 <!-- 
     商品种类：0——书籍 1——电子产品 2——学习工具 3——生活用品 4——其他
+    $type = array('书籍','电子产品','学习用品','生活用品','其他');
 -->
 <?php
     class Goods{
         var $conn;
-        private $good_id;
-        private $type_id;
-        private $good_name;
-        private $good_describe;
-        private $good_image;
-        private $good_price;
-        private $start_time;
-        private $end_time;
-        private $old_new;
-        private $good_state;
-        private $click_time;
-        private $good_owner;
-        private $good_contact;
-        private $good_address;
+        var $arr; // 用来容纳获取到的商品
+        private $good_id; // 商品ID
+        private $type_id; // 商品类型
+        private $good_name; // 商品名称
+        private $good_describe; // 商品描述
+        private $good_image; // 商品图片链接
+        private $good_price; // 商品价格
+        private $start_time; // 商品发布时间
+        private $end_time; // 商品结束时间
+        private $old_new; // 商品新旧程度
+        private $good_state; // 商品状态
+        private $click_time; // 商品点击次数
+        private $good_owner; // 商家姓名
+        private $good_contact; // 商家联系方式
+        private $good_address; // 商品所在地
 
         function __construct() {
             $server="localhost";//主机
@@ -73,7 +75,7 @@
 
         // 从数据库中扒下信息
         function find_good_by_id($good_id){
-            $sql = "select * from users where good_id = '$good_id'";
+            $sql = "select * from goods where good_id = $good_id";
             $result = $this->conn->query($sql);//执行sql
             if($array = $result->fetch_array()){
                 // 把数据保存近变量中
@@ -98,6 +100,7 @@
             return False;
         }
         
+        // 插入新的商品
         function insert_goods(){
             if($this->good_name == null) return FALSE;
             if($this->good_describe == null) return FALSE;
@@ -111,15 +114,10 @@
             if($this->good_contact == null) return FALSE;
             if($this->good_address == null) return FALSE;
             
-            // 设计sql语句
-            /* $sql = "insert into goods (type_id, good_name, good_describe, good_image, good_price, start_time,
-            end_time, old_new, good_state, good_owner, good_contact, good_address, click_time) 
-            values($this->type_id, '$this->good_name', '$this->good_describe', '$this->good_image', $this->good_price, $this->start_time, $this->end_time, 
-            '$this->old_new', $this->good_state, '$this->good_owner', '$this->good_contact', '$this->good_address' ,0)";
- */         
+            // 设计sql语句      
             $sql = "insert into goods (type_id , good_name, good_describe , good_image, good_price, start_time, end_time,
                     old_new, good_state, good_owner, good_contact, good_address,click_time) 
-                    values($this->type_id ,'$this->good_name','$this->good_describe', '$this->good_image', $this->good_price, $this->start_time, $this->end_time,
+                    values($this->type_id ,'$this->good_name','$this->good_describe', '$this->good_image', $this->good_price, '$this->start_time', '$this->end_time',
                     '$this->old_new', $this->good_state, '$this->good_owner', '$this->good_contact', '$this->good_address', 0)";
             //插入数据
             if($this->conn->query($sql)){
@@ -127,6 +125,61 @@
             }
             //成功插入返回True
             return false;
+        }
+
+        // 增加点击次数
+        function be_click(){
+            $this->click_time = $this->click_time + 1;
+            // 更新点击次数
+            $sql = "UPDATE goods set click_time = $this->click_time WHERE good_id = $this->good_id;";
+            if($this->conn->query($sql)){
+                return true;
+            }
+            return false;
+        }
+
+        function find_new_goods($num){
+            // 获取$num行数据
+            $sql = "SELECT * FROM goods ORDER BY good_id DESC LIMIT $num";
+            if(!$this->arr = $this->conn->query($sql)){
+                return false;
+            }
+            return true;
+        }
+
+        function find_goods_by_type_id($id){
+            // 设计sql语句
+            $sql = "select * from goods where type_id = $id";
+            // 成功获取商品则返回True
+            if($this->arr = $this->conn->query($sql)){
+                return true;
+            }
+            return false;
+        }
+
+        function fetch_next_good(){
+            // 获取下一个商品信息
+            if($array = $this->arr->fetch_array()){
+                // 把数据保存近变量中
+                $this->good_id = $array['good_id'];
+                $this->type_id = $array['type_id'];
+                $this->good_name = $array['good_name'];
+                $this->good_describe = $array['good_describe'];
+                $this->good_image = $array['good_image'];
+                $this->good_price = $array['good_price'];
+                $this->start_time = $array['start_time'];
+                $this->end_time = $array['end_time'];
+                $this->old_new = $array['old_new'];
+                $this->good_state = $array['good_state'];
+                $this->click_time = $array['click_time'];
+                $this->good_owner = $array['good_owner'];
+                $this->good_contact = $array['good_contact'];
+                $this->good_address = $array['good_address'];
+                // 说明成功赋值
+                return True;
+            }
+            // 没有找到这个商品
+            return False;
         }
     }
 ?>

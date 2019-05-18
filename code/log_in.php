@@ -1,77 +1,46 @@
 <?php
-    // 登陆脚本
     include('Class_Users.php');
-    $user = new Users();
+    $user=new Users();
 
-   /*  重点：$_session变量是一类全局变量，可以与后端进行对话（php里保存的变量可以用在html里），
-        而且，$_session变量会跟随用户的网页一起移动，到了另一个页面里，仍旧可以使用这些变量
-        有了$_session以后，我们就能实现更多与前端的连接
-         */
-    // 如果尚未定义Passed的session对象，就定义一个，值为false表示还未通过身份验证
     if(!isset($_SESSION['Passed'])){
-        $_SESSION['Passed'] = false;
+         $_SESSION['Passed'] = false;
     }
 
-    if($_SESSION['Passed'] == false){
-        //检查用户是否已经输入过数据
-        if(!isset($_POST['username']) || $_POST['username'] == ""){
-            $errmsg = "请输入用户名和密码";
+    if(isset($_POST['username'])){
+        $username=$_POST['username'];
+        if(!$user->is_user_name($username)){
+            $_SESSION['Passed']=true;
         }
         else{
-            // 读取从表单获取的数据
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-
-            //开始验证是输入的 username 是否为用户名
-            if($user->is_user_name($username)){
-                if($user->is_user_password($password)){
-                    $_SESSION['Passed'] = true;
-                    $_SESSION['user_id'] = $user->user_id;
-                }else{
-                    $errmsg = "密码不正确";
-                }
-            }// 验证user是否为邮箱
-            elseif($user->is_user_email($username)){
-                if($user->is_user_password($password)){
-                    $_SESSION['Passed'] = true;
-                    $_SESSION['user_id'] = $user->user_id;
-                }else{
-                    $errmsg = "密码不正确";
-                }
-            }else{
-                $errmsg = "请输入正确的用户名或邮箱";
-            }
+            $_SESSION['Passed']=false;
+            $errmsg="该用户名已注册";
         }
     }
-    if($_SESSION['Passed'])
-        echo("success!");
 
+    if(isset($_POST['password1'])){
+        $password=$_POST['password1'];
+    }
+
+    if(isset($_POST['email'])){
+        $email=$_POST['email'];
+        if($user->is_user_email($email)){
+            $_SESSION['Passed']=false;
+            $errmsg="该邮箱已注册";
+        }
+    }
     
-    // 如果登陆不成功，则重新打印出登陆表单
-    if($_SESSION['Passed'] == false){
+       if($_SESSION['Passed']==false){
 ?>
-
 <!doctype html>
 <style>
     html, body {
         height: 100%;
     }
 
-    body {
-        font: 12px '微软雅黑', 'Trebuchet MS', Arial, Helvetica;
-        margin: 0;
-        background-color: #d9dee2;
-        background-image: -webkit-gradient(linear, left top, left bottom, from(#ebeef2), to(#d9dee2));
-        background-image: -webkit-linear-gradient(top, #ebeef2, #d9dee2);
-        background-image: -moz-linear-gradient(top, #ebeef2, #d9dee2);
-        background-image: -ms-linear-gradient(top, #ebeef, #d9dee2);
-        background-image: -o-linear-gradient(top, #ebeef2, #d9dee2);
-        background-image: linear-gradient(top, #ebeef2, #d9dee2);
-    }
 
     #login {
         background-image: url(img/%E7%9B%90%E7%B3%BB%E6%98%9F%E7%90%83%E8%83%8C%E6%99%AF%E5%9B%BE1.jpg);
-        height: 240px;
+        height: 330px;
         width: 400px;
         margin: -150px 0 0 -230px;
         padding: 30px;
@@ -179,7 +148,7 @@
     }
 
     #actions {
-        margin: 25px 0 0 0;
+        margin-top: 0px;
     }
 
     #submit {
@@ -203,7 +172,7 @@
         float: left;
         height: 35px;
         padding: 0;
-        width: 120px;
+        width: 400px;
         cursor: pointer;
         font: bold 15px Arial, Helvetica;
         color: #8f5a0a;
@@ -232,7 +201,7 @@
 
     #actions a {
         color: #3151A2;
-        float: right;
+        float: left ;
         line-height: 35px;
         margin-left: 10px;
     }
@@ -256,7 +225,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>“黑市”登录</title>
+    <title>“黑市”注册</title>
     <style type="text/css">
         body {
             background-image: url(img/盐系星球背景图.jpg);
@@ -293,21 +262,36 @@
             padding-top: 100px;
         }
     </style>
-
+<script type="text/javascript">
+	function check(){
+		var psw1=document.getElementById("password1");
+		var psw2=document.getElementById("password2");
+		if(psw1.value!=psw2.value){
+			psw2.setCustomValidity("密码不一致，请重新输确认");
+		}
+		else
+			psw2.setCustomValidity("");
+	}
+</script>
 </head>
 
 
 <body>
-    <form id="login" opacity: 0.5 method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
-        <h1>Log In</h1>
-        <p><?php echo($errmsg);?></p>
+    <div id="menu">
+        <ul>
+    </ul>
+    </div>
+    <div id="head">Let's start a shopping !</div>
+    <form id="login" action="log_in.php" method="POST">
+        <h1>注册账号</h1>
         <fieldset id="inputs">
-          <input id="username" type="text" placeholder="Username or Email_address" name="username" autofocus required/>
-          <input id="password" type="password" placeholder="Password" name="password" required/>
-        </fieldset>
+			<input id="username" type="text" placeholder="Username" name="username" autofocus required/>
+			<input id="email" type="text" placeholder="Email" name="email" autofocus required/>
+			<input id="password1" type="password" placeholder="Password" name="password1" required/>
+			<input id="password2" type="password" placeholder="Confirm Password" name="password2" required/>
+		</fieldset>
         <fieldset id="actions">
-            <input type="submit" id="submit" value="Log in"  >
-            <a href="">忘记密码?</a><a href="course1.html">注册</a>
+            <input type="submit" id="submit" value="Create account" onClick="check()"/>
         </fieldset>
     </form>
     <br><br>
@@ -321,10 +305,17 @@
 
 <?php
         exit("");
-    }
-    else{
-        header('content-type:text/html;charset=utf-8');
-        $url='index.php';
-        echo "<script>window.location.href='$url';</script>;";
-    } 
+       }else{
+        $user->set_user_name($username);
+        $user->set_user_email($email);
+        $user->set_user_password($password);
+        
+        if($user->register_insert()){
+         header('content-type:text/html;charset=utf-8');
+         $url='index.php';
+         echo "<script>window.location.href='$url';</script>;";
+        }
+       }
 ?>
+
+

@@ -1,0 +1,200 @@
+﻿body
+{
+    font-family: 'Open Sans' , sans-serif;
+    padding: 0;
+    margin: 0;
+    background-color: #FFEBCD
+}
+
+h1
+{
+    font-weight: 100;
+    font-size: 50px;
+    text-align: center;
+    color: #545454;
+    margin: 0;
+}
+h2
+{
+    font-weight: 100;
+    font-size: 20px;
+    text-align: center;
+    color: #969696;
+    margin-top: 10px;
+}
+button {
+    top:30px;
+    position: relative;
+    display: inline-block;
+    background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+    height: 44px;
+    padding: 0;
+    width: 245px;
+    cursor: pointer;
+    font: bold 15px Arial, Helvetica;
+    color: #8f5a0a;
+}
+.ppnl, .pn1, .pn2, .pn3, .pn4, .pn5, .pn6, .pn7
+{
+    padding: 50px 0;
+}
+.ppnl
+{
+    background: #fff;
+}
+.pn1, .pn2, .pn3
+{
+    float: left;
+    width: 33.3%;
+}
+.pn1
+{
+    background-color: #FFEBCD;
+}
+.pn2
+{
+    background-color: #FFEBCD;
+}
+.pn3
+{
+    background-color: #FFEBCD;
+}
+
+select {
+    position: relative;
+    display: inline-block;
+    background: transparent;
+    top:30px;
+    width: 245px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid rgb(0, 0, 0);
+    height: 40px;
+    -webkit-appearance: none; /*for chrome*/
+ }
+ #m {
+    position: relative;
+    display: inline-block;
+    background: transparent;
+    width: 245px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid rgb(121, 104, 8);
+    height: 30px;
+    -webkit-appearance: none; /*for chrome*/
+ }
+ #submit {
+    background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+    float: left;
+    height: 44px;
+    padding: 0;
+    width: 245px;
+    cursor: pointer;
+    font: bold 15px Arial, Helvetica;
+    color: #8f5a0a;
+}
+
+ img{
+	width: auto;
+	height: auto;
+	max-width: 50%;
+	max-height: 50%;	
+}
+
+.list
+{
+}
+.list li
+{
+    list-style: none;
+    text-align: center;
+}
+
+.clearfix:after
+{
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.clearfix
+{
+    display: inline-block;
+}
+
+html[xmlns] .clearfix
+{
+    display: block;
+}
+
+* html .clearfix
+{
+    height: 1%;
+}
+
+.demos
+{
+    width: 40%;
+    float: right;
+    margin-bottom: 20px;
+}
+.demos ul
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.demos ul li
+{
+    display: inline-block;
+    float: left;
+}
+.demos ul li a
+{
+    display: block;    
+    padding: 5px;
+    line-height: 20px;
+    background-color: #FFD700;
+    margin: 0px 5px;
+}
+.demos ul li a
+{
+    color: black;
+    text-decoration: none;
+    font-size:0.9em;
+}

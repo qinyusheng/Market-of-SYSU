@@ -53,10 +53,13 @@
         $good->set_good_describe($_POST['good_descript']);
 
         //计算开始和截止的时间
+        // 获取当前时间戳
         $start_time = time();
+        // 计算结束时的时间戳
         $end_time = $start_time + $_POST['post_time'] *24*3600;
-        $good->set_end_time($end_time);
-        $good->set_start_time($start_time);
+        // 将时间戳转化为具体时间形式保存进数据库种
+        $good->set_end_time(date("Y-m-d H:i:s",$end_time));
+        $good->set_start_time(date("Y-m-d H:i:s",$start_time));
 
         // 将图片保存至本地
         $img_address = $file->find_address();
@@ -92,21 +95,14 @@
     echo('商品发布时长：'.$_POST['post_time'].'<br>');
     echo('商品开始发布时间：'.$good->get_start_time().'<br>');
     echo('现在的时间是：'.time().'<br>'); */
+    //如果成功就显示成功页面，失败就显示失败页面
     if($error == 0){
-?>
-
-<html>
-    <head>发布成功，点击以下返回主页</head>
-    
-    <body>
-        <br>
-    <a href="index.html">返回主页</a>
-    </body>
-</html>
-
-<?php
+        header('content-type:text/html;charset=utf-8');
+        $url='succeed_post.html';
+        echo "<script>window.location.href='$url';</script>;";
     }else{
-        // 此处打印错误信息
-        //print_error($error);
+        header('content-type:text/html;charset=utf-8');
+        $url='fail_post.html';
+        echo "<script>window.location.href='$url';</script>;";
     }
 ?>
