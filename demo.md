@@ -111,4 +111,7 @@
 
 ![我的商品](images/my_good.png)
 
-> 更多功能请查看展示视频
+---
+
+更具体的功能展示请观看展示视频：
+[中大黑市](https://github.com/qinyusheng/Market-of-SYSU/blob/master/video/%E4%B8%AD%E5%A4%A7%E9%BB%91%E5%B8%82.mp4)
