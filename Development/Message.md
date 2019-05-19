@@ -9,13 +9,14 @@
 ### 成员变量
 
 1. $message_id:主键，自增
-2. $message_type:信息类型，决定如何处理其他数据内容
-3. $message_index:需处理的对象的ID
-4. $message_text:申请/反馈文本
-5. $message_date:时间戳
-6. $message_state:该信息的状态，暂时分为（0-未处理，1-管理员已处理，2-用户已阅读）
-7. $message_change:需要做出的修改
-8. $conn：连接变量，与数据库的接口
+2. $message_type:信息类型 ($mes_type = array('操作记录','修改密码','商品发布'))
+3. $message_subject：操作执行主体
+4. $message_object：操作执行对象
+5. $message_text:申请/反馈文本
+6. $message_date：时间戳
+7. $message_state：该信息的状态，暂时分为（0-未处理，1-管理员已处理，2-用户已阅读）
+8. $message_result：操作执行结果
+9. $conn：连接变量，与数据库的接口
 
 ### 成员函数
 
@@ -26,6 +27,39 @@
 ---
 
 ## 功能实现
+
+### 用户修改密码申请
+
+1. 信息存储方式：
+   * message_subject：用户ID
+   * message_object：修改前的密码
+   * message_result：修改后的密码
+   * message_date：用户申请发送时间
+   * message_type：类型ID（1 -> 密码修改)
+   * message_state：还未通过时为0，通过后为1
+   * message_text：null
+
+### 商品发布申请
+
+1. 信息存储方式：
+   * message_subject：用户ID
+   * message_object：商品ID
+   * message_result：发布时长
+   * message_date：用户申请发送时间
+   * message_type：类型ID（2 -> 商品发布)
+   * message_state：还未通过时为0，通过后为1
+   * message_text：null
+
+### 系统记录
+
+1. 信息存储方式：
+   * message_subject：管理员ID
+   * message_object：信息ID
+   * message_result：通过/拒绝
+   * message_date：处理时间
+   * message_type：类型ID（0 -> 操作记录)
+   * message_state：设置为1
+   * message_text：操作名称
 
 ### 功能流程
 
@@ -57,3 +91,18 @@
 
    1. 管理员在点击同意以后，运行成员函数**message_agree()**,改变信息状态
    2. 点击拒绝以后，运行成员函数**message_refuse()**
+
+### 数据库设计
+
+~~~ mysql
+CREATE table messages(
+    message_id INT PRIMARY KEY AUTO_INCREMENT,
+    message_type INT NOT null,
+    message_subject VARCHAR(50) not null,
+    message_object VARCHAR(50) not null,
+    message_text text,
+    message_date timestamp not NULL DEFAULT CURRENT_TIMESTAMP,
+    message_state int not null default 0,
+    message_result  VARCHAR(80)
+)
+~~~
