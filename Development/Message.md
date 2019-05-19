@@ -53,13 +53,13 @@
 ### 系统记录
 
 1. 信息存储方式：
-   * message_subject：管理员ID
+   * message_subject：管理员名称
    * message_object：信息ID
    * message_result：通过/拒绝
    * message_date：处理时间
    * message_type：类型ID（3 -> 操作记录)
    * message_state：设置为0
-   * message_text：操作名称
+   * message_text：操作类型
 
 ### 功能流程
 
