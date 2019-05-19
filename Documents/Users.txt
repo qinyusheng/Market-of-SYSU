@@ -1,5 +1,5 @@
 create table Users(
-        user_id int auto_increment primary key not null,
+        user_id int auto_increment primary key n	ot null,
         user_name varchar(50) not null,
         user_password varchar(50) not null,
         user_email varchar(50) not null,
