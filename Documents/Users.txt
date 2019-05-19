@@ -3,14 +3,6 @@ create table Users(
         user_name varchar(50) not null,
         user_password varchar(50) not null,
         user_email varchar(50) not null,
-        user_sex bit,
-        user_real_name varchar(50),
-        user_department varchar(50),
-        user_major varchar(50),
-        user_grade bit,
-        user_contact varchar(50),
         user_style bit default 0,
-        user_text tinytext,
-        user_time date,
-        user_record timestamp
+        user_time timestamp NULL DEFAULT CURRENT_TIMESTAMP
 )
