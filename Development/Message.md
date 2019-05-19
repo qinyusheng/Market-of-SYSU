@@ -42,7 +42,7 @@
 ### 商品发布申请
 
 1. 信息存储方式：
-   * message_subject：用户ID
+   * message_subject：用户名称
    * message_object：商品ID
    * message_result：发布时长
    * message_date：用户申请发送时间
@@ -57,8 +57,8 @@
    * message_object：信息ID
    * message_result：通过/拒绝
    * message_date：处理时间
-   * message_type：类型ID（0 -> 操作记录)
-   * message_state：设置为1
+   * message_type：类型ID（3 -> 操作记录)
+   * message_state：设置为0
    * message_text：操作名称
 
 ### 功能流程
