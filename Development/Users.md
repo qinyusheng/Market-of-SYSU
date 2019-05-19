@@ -42,3 +42,16 @@
    * 将注册信息插入到数据库中。
 *register_insert(username , email , password)*
    * 全部成功返回0，第一步失败返回1，第二步失败返回2。
+
+# 数据库设计
+
+~~~mysql
+create table Users(
+        user_id int auto_increment primary key not null,
+        user_name varchar(50) not null,
+        user_password varchar(50) not null,
+        user_email varchar(50) not null,
+        user_style bit default 0,
+        user_time timestamp NULL DEFAULT CURRENT_TIMESTAMP
+)
+~~~
