@@ -7,8 +7,9 @@
         private $user_password;
         private $user_email;
         private $user_style;
-        private $user_time; // 为冻结用户提供方便
-/*         private $user_real_name;
+        private $user_time; 
+        // 为冻结用户提供方便
+/*      private $user_real_name;
         private $user_Department;
         private $user_major;
         private $user_grade;
@@ -39,6 +40,7 @@
         function get_user_name(){return $this->user_name;}
         function get_user_email(){return $this->user_email;}
         function get_user_id(){return $this->user_id;}
+        function get_user_style(){return $this->user_style;}
 
         function set_user_name($s){$this->user_name = $s;}
         function set_user_email($s){$this->user_email = $s;}
@@ -46,14 +48,14 @@
 
         function is_user_name($username){
             $sql = "select * from users where user_name = '$username'";
-            if($result = $this->conn->query($sql)){//执行sql
-                $array = $result->fetch_array();
+            $result = $this->conn->query($sql);//执行sql
+            if($array = $result->fetch_array()){
                 $this->user_name = $array['user_name'];
                 $this->user_email = $array['user_email'];
                 $this->user_password = $array['user_password'];
                 $this->user_id = $array['user_id'];
                 $this->user_style = $array['user_style'];
-                $this->user_time = $array['use_time'];
+                $this->user_time = $array['user_time'];
                 return true;
             }
             return false;
@@ -85,7 +87,11 @@
 
         function register_insert(){
             $this->user_time = time();
-            $sql = "insert into Users(user_id,user_name,user_password,user_email,user_time) values ('$this->user_name','$this->user_password','$this->user_email',$this->user_time)";
+            /* echo "$this->user_name<br>";
+            echo "$this->user_password<br>";
+            echo "$this->user_email<br>";
+            echo "$this->user_time<br>"; */
+            $sql = "insert into users(user_name,user_password,user_email,user_time) values('$this->user_name','$this->user_password','$this->user_email',$this->user_time)";
             if($this->conn->query($sql)){//执行sql
                 return true;
             }

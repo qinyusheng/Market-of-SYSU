@@ -1,6 +1,14 @@
 <?php
-    // 登陆状态判定
+	//开启会话
+	session_start(); 
 
+    // 登陆状态判定
+	if($_SESSION['Passed'] == false){
+		header('content-type:text/html;charset=utf-8');
+        $url='exit.php';
+		echo "<script>window.location.href='$url';</script>;";
+		exit();
+	}
     
     // 声明一个Goods类对象来与数据库Goods连接
     include('Class_Goods.php');
@@ -31,6 +39,7 @@
 <title><?php echo $_GET['type'] ?>分区</title>
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/css-market.css">
+<link rel="stylesheet" href="css/button.css">
 	<style  type="text/css">
 body
 {
@@ -213,11 +222,46 @@ a:hover {
 a:active {
 	text-decoration: none;
 }
+
+.head1{
+		height:30px;
+	background-color:#9F4300;
+	filter:opacity(70%);
+	color:#FFFFFF;
+	/* color: #FFFFFF;
+	padding-top: 2px;
+	padding-left:70%;
+	font-size: 24px;
+	font-family:  "方正寂地简体"; */
+}
+
+.link1:link{
+	color: rgb(240, 3, 7);
+	text-decoration: none;
+}
+.link1:visited{
+	color: rgb(240, 3, 7);
+	text-decoration: none;
+}
+.link2:link{
+	color: 	#FF0000;
+	text-decoration: none;
+}
+.link2:visited{
+	color: 	#FF0000;
+	text-decoration: none;
+}
     </style>
 </head>
 
 <body>
-	<div id="head"><a href="first.html">退出当前账号</a></div>
+<div class="head1">
+		<a href="index.php">
+				<button class="butn">黑市首页</button></a>
+				你好，<?php echo $_SESSION['user_name'];?>  	
+				<a class="link2" href="exit.php">[注销]</a>
+			<span style="color: #FFFFFF;padding-left:50%;font-size: 24px;">Let's start a shopping!</span>
+		</div>
 <div id="menu">
 	<ul>
 	<div class="dropdown">
@@ -234,9 +278,10 @@ a:active {
   </div>
 </div>
 <div class="dropdown">
-  <button class="dropbtn">商品发布</button>
+  <button class="dropbtn">卖家中心</button>
   <div class="dropdown-content">
-  <a href="good_post.html">卖家中心</a>
+  <a href="good_post.html">商品发布</a>
+  <a href="good_post.html">我的商品</a>
   </div>
 </div>
 <div class="dropdown">
@@ -278,11 +323,14 @@ a:active {
 ?>
 	<div id="<?php echo $style[$style_id%3]; ?>">
 		<a href="good_detail.php?good_id=<?php echo $good->get_good_id(); ?>">
-			<img src="<?php echo $good->get_good_image(); ?>" alt="中大黑市" width="344" height="230">
+			<img src="<?php echo $good->get_good_image(); ?>" alt="中大黑市" height="200">
 			<h2><?php echo $good->get_good_name(); ?></h2>
 		</a>
-			<span><?php echo $good->get_good_price(); ?></span>
-			<p><?php echo $good->get_good_describe(); ?></p>
+			<span>￥ <?php echo $good->get_good_price(); ?></span>
+			<p><?php echo mb_substr($good->get_good_describe(), 0 ,35 , "utf-8"); 
+				if(mb_strlen($good->get_good_describe()) >=35){
+					echo "……";
+				}?></p>
         </div>
 <?php        
          if($style_id %3 == 2){

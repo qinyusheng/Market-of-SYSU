@@ -127,6 +127,18 @@
             return false;
         }
 
+        // 找到用户发布的商品
+        function find_good_by_user_name($name){
+            // 设计sql
+            $sql = "SELECT * from goods WHERE good_owner = '$name'";
+            
+            // 查找商品
+            if($this->arr = $this->conn->query($sql)){
+                return true;
+            }
+            return false;
+        }
+
         // 增加点击次数
         function be_click(){
             $this->click_time = $this->click_time + 1;
@@ -140,7 +152,7 @@
 
         function find_new_goods($num){
             // 获取$num行数据
-            $sql = "SELECT * FROM goods ORDER BY good_id DESC LIMIT $num";
+            $sql = "SELECT * FROM goods WHERE good_state = 1 ORDER BY good_id DESC LIMIT $num";
             if(!$this->arr = $this->conn->query($sql)){
                 return false;
             }
@@ -149,7 +161,7 @@
 
         function find_goods_by_type_id($id){
             // 设计sql语句
-            $sql = "select * from goods where type_id = $id";
+            $sql = "SELECT * from goods WHERE type_id = $id and good_state = 1 ORDER BY click_time DESC";
             // 成功获取商品则返回True
             if($this->arr = $this->conn->query($sql)){
                 return true;
@@ -178,8 +190,17 @@
                 // 说明成功赋值
                 return True;
             }
-            // 没有找到这个商品
+            // 失败，没有商品了
             return False;
+        }
+
+        function delete_good_by_id($id){
+            // 设计sql语句
+            $sql = "DELETE from goods WHERE good_id = $id";
+            if($this->conn->query($sql)){
+                return true;
+            }
+            return false;
         }
     }
 ?>

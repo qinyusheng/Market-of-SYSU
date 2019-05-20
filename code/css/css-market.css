@@ -176,9 +176,10 @@
 }
 #jane,#mike,#john{
     width: 345px;
-    height: 464px;
+    height: 400px;
     float: left;
     box-sizing: border-box;
+    text-align: center;
 /*    border: solid 1px #ccc;*/
 /*    box-shadow: 0 0 25px 5px  #ccc;*/
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px 0px, rgba(0, 0, 0, 0.19) 0px 4px 20px 0px;
@@ -193,6 +194,7 @@
     line-height: 36px;
     font-weight: 500;
     padding: 20px;
+    text-align: left;
 }
 #jane span,#mike span,#john span{
     display: block;
@@ -205,6 +207,7 @@
     padding-top: 0px;
     color: black;
     
+    text-align: left;
 }
 #jane p,#mike p,#john p{
     display: block;
@@ -215,6 +218,8 @@
     padding: 20px;
     padding-top: 0px;
     padding-bottom: 5px;
+    
+    text-align: left;
 }
 #jane input[type="button"],#mike input[type="button"],#john input[type="button"]{
     width: 315px;

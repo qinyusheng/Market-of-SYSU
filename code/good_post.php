@@ -1,6 +1,17 @@
 <!-- 利用$_POST从表单中获取数据，并储存到数据库中 -->
 
 <?php
+    //开启会话
+	session_start(); 
+
+    // 判断登陆状态
+    if($_SESSION['Passed'] == false){
+		header('content-type:text/html;charset=utf-8');
+        $url='exit.php';
+		echo "<script>window.location.href='$url';</script>;";
+		exit();
+	}
+
     // 创建一个Files类对象来进行图片保存
     include('Class_Files.php');
     $file = new Images();
@@ -71,7 +82,7 @@
         }
 
         // 获取发布者的信息(待修改)
-        if(isset($_SESSION['ID'])){
+        if(isset($_SESSION['user_name'])){
             $good->set_good_owner($_SESSION['ID']);
         }else{
             $good->set_good_owner('测试');
@@ -97,12 +108,16 @@
     echo('现在的时间是：'.time().'<br>'); */
     //如果成功就显示成功页面，失败就显示失败页面
     if($error == 0){
+        echo "<script>alert('商品发布成功')</script>";
+
         header('content-type:text/html;charset=utf-8');
-        $url='succeed_post.html';
+        $url='index.php';
         echo "<script>window.location.href='$url';</script>;";
     }else{
+        echo "<script>alert('商品发布失败')</script>";
+        
         header('content-type:text/html;charset=utf-8');
-        $url='fail_post.html';
+        $url='good_post.php';
         echo "<script>window.location.href='$url';</script>;";
     }
 ?>

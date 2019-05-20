@@ -1,21 +1,20 @@
 <?php
+    session_start();
+
     // 登陆脚本
     include('Class_Users.php');
     $user = new Users();
-
    /*  重点：$_session变量是一类全局变量，可以与后端进行对话（php里保存的变量可以用在html里），
         而且，$_session变量会跟随用户的网页一起移动，到了另一个页面里，仍旧可以使用这些变量
         有了$_session以后，我们就能实现更多与前端的连接
          */
     // 如果尚未定义Passed的session对象，就定义一个，值为false表示还未通过身份验证
-    if(!isset($_SESSION['Passed'])){
-        $_SESSION['Passed'] = false;
-    }
+    $_SESSION['Passed'] = false;
 
     if($_SESSION['Passed'] == false){
         //检查用户是否已经输入过数据
         if(!isset($_POST['username']) || $_POST['username'] == ""){
-            $errmsg = "请输入用户名和密码";
+            $errmsg = "请输入   用户名/邮箱 和密码";
         }
         else{
             // 读取从表单获取的数据
@@ -26,7 +25,7 @@
             if($user->is_user_name($username)){
                 if($user->is_user_password($password)){
                     $_SESSION['Passed'] = true;
-                    $_SESSION['user_id'] = $user->user_id;
+                    $_SESSION['user_id'] = $user->get_user_id();
                 }else{
                     $errmsg = "密码不正确";
                 }
@@ -43,10 +42,6 @@
             }
         }
     }
-    if($_SESSION['Passed'])
-        echo("success!");
-
-    
     // 如果登陆不成功，则重新打印出登陆表单
     if($_SESSION['Passed'] == false){
 ?>
@@ -256,7 +251,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>“黑市”登录</title>
+    <title>中大“黑市”——登录</title>
     <style type="text/css">
         body {
             background-image: url(img/盐系星球背景图.jpg);
@@ -298,16 +293,17 @@
 
 
 <body>
+<div id="head">Let's start a shopping !</div>
     <form id="login" opacity: 0.5 method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
-        <h1>Log In</h1>
+        <h1>登 陆</h1>
         <p><?php echo($errmsg);?></p>
         <fieldset id="inputs">
           <input id="username" type="text" placeholder="Username or Email_address" name="username" autofocus required/>
           <input id="password" type="password" placeholder="Password" name="password" required/>
         </fieldset>
         <fieldset id="actions">
-            <input type="submit" id="submit" value="Log in"  >
-            <a href="">忘记密码?</a><a href="course1.html">注册</a>
+            <input type="submit" id="submit" value="登陆"  >
+            <a href="">忘记密码?</a><a href="log_in.php">注册</a>
         </fieldset>
     </form>
     <br><br>
@@ -323,8 +319,17 @@
         exit("");
     }
     else{
+        // 跳转到主页
+        $_SESSION['user_name'] = $user->get_user_name();
+        
+//        echo "<script>alert('stop');</script>";
+
         header('content-type:text/html;charset=utf-8');
-        $url='index.php';
+        if($user->get_user_style() == 0){
+            $url='index.php';
+        }else{
+            $url = 'inbox.php';
+        }
         echo "<script>window.location.href='$url';</script>;";
     } 
 ?>

@@ -5,6 +5,17 @@
 -->
 
 <?php
+	 //开启会话
+	 session_start(); 
+
+	 // 登陆状况判定
+	 if($_SESSION['Passed'] == false){
+		header('content-type:text/html;charset=utf-8');
+        $url='exit.php';
+		echo "<script>window.location.href='$url';</script>;";
+		exit();
+	 }
+
    // 声明一个Goods类对象来链接数据库
    include('Class_Goods.php');
    $good = new Goods();
@@ -26,6 +37,8 @@
 <title>“黑市”好物-物品1</title>
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/css-market.css">
+<link rel="stylesheet" href="css/button.css">
+
 	<style  type="text/css">
 body
 {
@@ -114,9 +127,10 @@ body
 	color: #FFEBD7;
 	margin-left: auto;
 	margin-right: auto;
+	z-index: 3;
 	}
 
-#menu{
+/* #menu{
 	background-color: #00262F;
 	filter: opacity(90%);
 	height: 50px;
@@ -124,7 +138,7 @@ body
 	color: #FFEBD7;
 	margin-left: auto;
 	margin-right: auto;
-	}
+	} */
 
 .dropdown ul {
     list-style-type: none;
@@ -195,6 +209,7 @@ img {
 	width:100%;
 	background:rgba(255, 255, 255, 0.6);
 	padding:80px 0 80px 0;
+	z-index: 1;
 	}
 
 .feature_section .leftside{
@@ -212,6 +227,7 @@ img {
 	float:right;
 	width:587px;
 	margin:0 35px 0 0;
+	z-index: 2;
 	}
 
 	.container{
@@ -221,24 +237,53 @@ img {
 	position:relative;
 	}
 
-
-
-
-
-    .box{
-	width: 50%;
-	margin: 50px auto;
+	.head1{
+		height:30px;
+	background-color:#9F4300;
+	filter:opacity(70%);
+	color:#FFFFFF;
+	/* color: #FFFFFF;
+	padding-top: 2px;
+	padding-left:70%;
+	font-size: 24px;
+	font-family:  "方正寂地简体"; */
 }
+
+.link1:link{
+	color: rgb(240, 3, 7);
+	text-decoration: none;
+}
+.link1:visited{
+	color: rgb(240, 3, 7);
+	text-decoration: none;
+}
+.link2:link{
+	color: 	#FF0000;
+	text-decoration: none;
+}
+.link2:visited{
+	color: 	#FF0000;
+	text-decoration: none;
+}
+
+
+
 </style>
 
 </head>
 
 <body>
-	<div id="head">Let's start a shopping!</div>
+	<div class="head1">
+		<a href="index.php">
+				<button class="butn">黑市首页</button></a>
+				你好，<?php echo $_SESSION['user_name']; ?>  	
+				<a class="link2" href="">[注销]</a>
+			<span style="color: #FFFFFF;padding-left:50%;font-size: 24px;">Let's start a shopping!</span>
+		</div>
 
 <div id="menu">
-	<ul>
-	<div class="dropdown">
+<ul>
+<div class="dropdown">
   <button class="dropbtn">“黑市”简介</button>
   <div class="dropdown-content">
     <a href="about1.html">“黑市”功能</a>
@@ -246,24 +291,26 @@ img {
   </div>
 </div>
 <div class="dropdown">
-  <button class="dropbtn">“黑市”私聊</button>
+  <button class="dropbtn">个人中心</button>
   <div class="dropdown-content">
-    <a href="course1.html">我的私信</a>
+    <a href="talk.html">我的私信</a>
   </div>
 </div>
 <div class="dropdown">
-  <button class="dropbtn">“黑市”分享</button>
+  <button class="dropbtn">卖家中心</button>
   <div class="dropdown-content">
-    <a href="share1.html">卖家推荐</a>
-    <a href="share2.html">好物分享</a>
+  <a href="good_post.html">商品发布</a>
+  <a href="good_post.html">我的商品</a>
   </div>
 </div>
 <div class="dropdown">
   <button class="dropbtn">“黑市”好物</button>
   <div class="dropdown-content">
-    <a href="thing1.html">书写工具</a>
-    <a href="thing2.html">二手书籍</a>
-    <a href="thing3.html">饰品器件</a>
+  <a href="type_goods.php?type=书籍">书籍</a>
+    <a href="type_goods.php?type=电子产品">电子产品</a>
+    <a href="type_goods.php?type=学习用品">学习用品</a>
+    <a href="type_goods.php?type=生活用品">生活用品</a>
+    <a href="type_goods.php?type=其他">其他</a>
   </div>
 </div>
 <div class="dropdown">
@@ -275,10 +322,6 @@ img {
 </div>
 </ul>
 </div>
-<div class="m2down">
-	<a href="index.html"><input type="button" value="回到首页" style="height:60px;width:120px;background: bisque;margin-left:80px;"></a>
-	</div>
-
 	<div class="feature_section" id="features">
 		<div class="container">
 		

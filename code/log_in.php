@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     include('Class_Users.php');
     $user=new Users();
 
@@ -225,7 +227,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>“黑市”注册</title>
+    <title>中大“黑市”——注册</title>
     <style type="text/css">
         body {
             background-image: url(img/盐系星球背景图.jpg);
@@ -277,12 +279,8 @@
 
 
 <body>
-    <div id="menu">
-        <ul>
-    </ul>
-    </div>
     <div id="head">Let's start a shopping !</div>
-    <form id="login" action="log_in.php" method="POST">
+    <form id="login" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
         <h1>注册账号</h1>
         <fieldset id="inputs">
 			<input id="username" type="text" placeholder="Username" name="username" autofocus required/>
@@ -304,16 +302,26 @@
 
 
 <?php
+        if(isset($errmsg)){
+            echo "<script>alert('$errmsg')</script>";
+        }
         exit("");
-       }else{
+       } // 如果通过的话
+       else{
         $user->set_user_name($username);
         $user->set_user_email($email);
         $user->set_user_password($password);
         
         if($user->register_insert()){
+         $_SESSION['user_name'] = $user->get_user_name();
+         $_SESSION['user_id'] = $user->get_user_id();
+         
          header('content-type:text/html;charset=utf-8');
          $url='index.php';
-         echo "<script>window.location.href='$url';</script>;";
+         echo "<script>window.location.href='$url';</script>;"; 
+        }
+        else{
+            echo "fail";
         }
        }
 ?>

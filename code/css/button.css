@@ -1,0 +1,37 @@
+.butn {
+    background: #ff9933;
+    background: #ff6600;
+    background-image: -webkit-linear-gradient(top, #ff6600, #f0912b);
+    background-image: -moz-linear-gradient(top, #ff6600, #805b35);
+    background-image: -ms-linear-gradient(top, #ff6600, #b87d3f);
+    background-image: -o-linear-gradient(top, #ff6600, #c47e34);
+    background-image: linear-gradient(to bottom, #ff6600, #b68552);
+    -webkit-border-radius: 17;
+    -moz-border-radius: 17;
+    border-radius: 17px;
+    border: solid #9F4300 2px;
+    text-shadow: 1px 1px 1px #f5f7f2;
+    font-family: Courier New;
+    color: #080808; 
+    text-decoration: none;
+    font-size: 15px;
+    padding: 3px 31px 0px 31px;
+    text-decoration: none;
+  }
+  
+  .butn:hover {
+    text-decoration: none;
+  }
+  
+  
+
+
+
+
+
+
+
+  /* font-size: 15px;
+    padding: 3px 31px 3px 31px;
+    text-decoration: none;
+    margin-left:5%; */

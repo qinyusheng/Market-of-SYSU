@@ -1,20 +1,25 @@
+<!-- 
+    信息类型：1 -> 密码修改；2 -> 商品发布；3 -> 操作记录
+ -->
 <?php
     class Messages{
         var $conn;
+        var $arr;
         private $message_id;
         private $message_type;
-        private $message_index;
+        private $message_subject;
+        private $message_object;
         private $message_text;
         private $message_date;
         private $message_state;
-        private $message_change;
+        private $message_result;
     
         // 构造函数与析构函数
         function __construct() {
             $server="localhost";//主机
             $db_username="root";//数据库用户名
             $db_password="qin";//数据库密码
-            $db_name='test';//数据库的名字
+            $db_name='market';//数据库的名字
             $this->conn = mysqli_connect($server,$db_username,$db_password);//链接数据库
             if(!$this->conn){
             die("we can't connect bro".mysqli_error($this->conn));//如果链接失败输出错误 die()退出脚本
@@ -34,50 +39,90 @@
         // get 函数
         function get_message_id(){return $this->message_id;}
         function get_message_type(){return $this->message_type;}
-        function get_message_index(){return $this->message_index;}
+        function get_message_subject(){return $this->message_subject;}
+        function get_message_object(){return $this->message_object;}
         function get_message_text(){return $this->message_text;}
         function get_message_date(){return $this->message_date;}
         function get_message_state(){return $this->message_state;}
-        function get_message_change(){return $this->message_change;}
+        function get_message_result(){return $this->message_result;}
 
         // set函数
         //function set_message_id($s){$this->message_id = $s;}
         function set_message_type($s){$this->message_type = $s;}
-        function set_message_index($s){$this->message_index = $s;}
+        function set_message_subject($s){$this->message_subject = $s;}
+        function set_message_object($s){$this->message_object = $s;}
         function set_message_text($s){$this->message_text = $s;}
         function set_message_date($s){$this->message_date = $s;}
         function set_message_state($s){$this->message_state = $s;}
-        function set_message_change($s){$this->message_change = $s;} 
+        function set_message_result($s){$this->message_result = $s;} 
 
 
-        // 将数据插入数据库
+        // 将数据插入数据库(待修改)
         function insert_message(){
             if($this->message_id == null) return FALSE;
             if($this->message_type == null) return FALSE;
-            if($this->message_index == null) return FALSE;
+            if($this->message_subjet == null) return FALSE;
             
-            // 设计sql语句
-            if($this->message_change != null){
-                $sql = "insert into 
-                        messages (message_id, message_type, message_index, message_change)
-                        values ($this->message_id, $this->get_message_type, $this->message_index, $this->message_change);";
-            }else{
-                $sql = "insert into 
-                        messages (message_id, message_type, message_index)
-                        values ($this->message_id, $this->get_message_type, $this->message_index);";
-            }
+            
             //插入数据
             $this->conn->query($sql);
             //成功插入返回True
             return true;
         }
 
-        // 返回搜索的结果集
-        function get_all_messages(){
-            $sql = "select * from messages;";
-            $result = $this->conn->query($sql);
+        // 获取操作记录
+        function get_operation_record($num){
+            if($num == 0){
+                $sql = "SELECT * from messages ORDER BY message_id DESC WHERE message_type = 0";
+            }else{
+                $sql = "SELECT * from messages WHERE message_type = 3 ORDER BY message_id DESC LIMIT $num";
+            }
+            if($this->arr = $this->conn->query($sql)){
+                return false;
+            }
+            return true;
+        }
+
+        function get_good_post_message($num){
+            if($num == 0){
+                $sql = "SELECT * from messages ORDER BY message_id DESC WHERE message_type = 2";
+            }else{
+                $sql = "SELECT * from messages ORDER BY message_id DESC WHERE message_type = 2 and message_state = 0";
+            }
+            if($this->arr = $this->conn->query($sql)){
+                return false;
+            }
+            return true;
+        }
+
+        function get_password_change_message($num){
+            if($num == 0){
+                $sql = "SELECT * from messages ORDER BY message_id DESC WHERE message_type = 1";
+            }else{
+                $sql = "SELECT * from messages ORDER BY message_id DESC WHERE message_type = 1 and message_state = 0";
+            }
+            if($this->arr = $this->conn->query($sql)){
+                return false;
+            }
+            return true;
+        }
+
+        function fetch_next_message(){
+            if($array = $this->arr->fetch_array()){
+                $this->message_id = $array['message_id'];
+                $this->message_object = $array['message_object'];
+                $this->message_subject = $array['message_subject'];
+                $this->message_date = $array['message_date'];
+                $this->message_type = $array['message_type'];
+                $this->message_result = $array['message_result'];
+                $this->message_state = $array['message_state'];
+                $this->message_text = $array['message_text'];
             
-            return $result;
+                // 成功赋值
+                return true;
+            }
+            // 失败，没有信息了
+            return false;
         }
         
 
@@ -98,6 +143,24 @@
             $this->conn->query($sql);
 
             return true;
+        }
+
+        function message_insert(){
+            echo "0";
+            if($this->message_type == null) return false;
+            echo "1";
+            if($this->message_subject == null) return false;
+            echo "2";
+            if($this->message_object == null) return false;
+            echo "3";
+
+            $sql = "insert into messages(message_type, message_subject, message_object, message_text, message_result)
+                value($this->message_type, '$this->message_subject', '$this->message_object', '$this->message_text', '$this->message_result');";
+            
+            if($this->conn->query($sql)){
+                return true;
+            }
+            return false;
         }
     }
 ?>
